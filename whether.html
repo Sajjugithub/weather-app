@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+
+    <style>
+        body{
+            
+            background-image:url("https://img.freepik.com/free-vector/flat-design-monsoon-season-clouds-illustration_23-2149424294.jpg?size=626&ext=jpg&ga=GA1.1.1395880969.1708992000&semt=aisz");
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        #form{
+            text-align: center;
+            font-size: large;
+            margin-top: 17%;
+            color:white;  
+        }
+        #input{
+        border:none; 
+        font-size: larger;
+        width:20%;
+        background-color: black;
+        color:white;
+        margin:2%;
+        font-weight: bold;
+        text-align: center;
+        border-radius: 3%;
+        }
+     
+        button{
+            font-size: larger;
+            font-weight: bold;
+            background-color: rgb(129, 129, 194);
+        }
+        p{
+            color:black;
+            font-size: larger;
+        }
+        div{
+            color:black;
+            font-size: larger;
+        }
+      
+    
+    </style>
+</head>
+<body>
+<!-- EventListenerConcept -->
+<!-- <button id="one">Submit</button>
+<input id="two"/>
+<script>
+    one.addEventListener("click",()=>{
+        alert("clicked")
+    })
+    two.addEventListener("change",()=>{
+        alert(two.value);
+    })
+    
+</script> -->
+
+
+<form id="form">
+    <input type="text" id="input" placeholder="enter city name"/></br>
+    <button>Submit</button>
+    <div id="cities"></div>
+</form>
+<script>
+    const form=document.getElementById("form");
+    const input=document.getElementById("input");
+    const info=document.getElementById("cities");
+    const apikey="ef165a8470d0c60c5666fbf1a9ea860b";
+    form.addEventListener("submit",e=>{
+e.preventDefault();
+info.textContent=" ";
+const inputValue=input.value;
+const url=`https://api.openweathermap.org/data/2.5/weather?q=${inputValue}&appid=${apikey}&units=metric`;
+fetch(url).then(response=>response.json())
+.then(data=>{
+    const {main,name}=data;
+    const para=document.createElement("div");
+    para.innerHTML=`<p>City:${name}</p>
+    <div>Temperature:${Math.round(main.temp)}<sup>0</sup>C</div>`;
+    info.appendChild(para);
+})
+.catch(()=>{
+    alert("plz enter valid city name");
+})
+form.reset();
+})
+</script>
+</body>
+</html>
